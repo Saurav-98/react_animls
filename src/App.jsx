@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import AnimalShow from "./AnimalShow";
 
-function App() {
-  const [count, setCount] = useState(0)
+import bird from "./assets/bird.svg";
+import cat from "./assets/cat.svg";
+import cow from "./assets/cow.svg";
+import dog from "./assets/dog.svg";
+import gator from "./assets/gator.svg";
+import horse from "./assets/horse.svg";
 
+const getRandomAnimal = () => {
+  const animals = ["bird", "cat", "cow", "dog", "gator", "horse"];
+  return animals[Math.floor(Math.random() * animals.length)];
+};
+
+const svgMap = {
+  bird,
+  cat,
+  cow,
+  dog,
+  gator,
+  horse,
+};
+const App = () => {
+  const [animal, setAnimal] = useState([]);
+
+  const handleClick = () => {
+    setAnimal((prev) => [...prev, getRandomAnimal()]);
+  };
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <button onClick={handleClick}>Add Animals</button>
+      <div className="animals-list">
+        {animal.map((a, i) => {
+          return <AnimalShow key={i} title={a} image={svgMap[a]} />;
+        })}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;
